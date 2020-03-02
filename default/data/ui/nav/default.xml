@@ -1,0 +1,5 @@
+<nav search_view="search" color="#E82127">
+<view name="search" label="Search"  default="true"/>
+<view name="inputs" />
+<view name="dashboards"/>
+</nav>
