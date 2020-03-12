@@ -4,7 +4,7 @@
     <panel>
       <map>
         <search>
-          <query>index=main sourcetype=covid19 latitude=*
+          <query>`covid_index` sourcetype=covid19 latitude=*
 | dedup longitude latitude
 | geostats latfield=latitude longfield=longitude sum(Confirmed) AS Confirmed, sum(Deaths) AS Deaths, sum(Recovered) AS Recovered</query>
           <earliest>-7d@h</earliest>
@@ -43,7 +43,7 @@
     <panel>
       <map>
         <search>
-          <query>index=main sourcetype=covid19 latitude=*
+          <query>`covid_index` sourcetype=covid19 latitude=*
 | dedup longitude latitude
 | replace UK WITH "United Kingdom" IN Region
 | replace US WITH "United States" IN Region

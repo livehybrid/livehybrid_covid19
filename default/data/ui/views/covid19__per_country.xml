@@ -5,7 +5,7 @@
       <title>Active Cases</title>
       <single>
         <search>
-          <query>index=main sourcetype=covid19
+          <query>`covid_index` sourcetype=covid19
 | fillnull State
 | dedup _time State Region
 | timechart limit=30 span=1d partial=f sum(Confirmed) AS Confirmed by Region</query>
@@ -38,7 +38,7 @@
     <panel>
       <chart>
         <search>
-          <query>index=main sourcetype=covid19
+          <query>`covid_index` sourcetype=covid19
 | fillnull State
 | dedup _time State Region
 | timechart limit=30 sum(Confirmed) AS Confirmed by Region</query>
