@@ -2,6 +2,8 @@
 
 Please note: this is a personal project to demonstrate the ease of pulling data from various sources and is not related to my day job, or any form of official publishing of data/figures.  
 
+For more info please see https://www.linkedin.com/pulse/uk-coronavirus-breakdown-region-splunk-william-searle/
+
 This has been tested on Linux and MacOSX Splunk Enterprise 8.0 and can be run on a free 500mb license. Head over to https://www.splunk.com/download to get started for free.  
 
 Clone the directory to $SPLUNK_HOME/etc/apps/livehybrid_covid19 (typically /opt/splunk/etc/apps/livehybrid_covid19).  
