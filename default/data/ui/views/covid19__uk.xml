@@ -1,7 +1,7 @@
 <dashboard theme="light">
   <label>COVID19 - England Regions</label>
   <search id="base">
-    <query>`covid_index` sourcetype=covidphe_georegions source=arcgis:phe:regions
+    <query>`covid_index` sourcetype=covidphe_georegions
 | rename GSS_NM AS Name
 | rename TotalCases AS count
 | table _time Name count</query>
