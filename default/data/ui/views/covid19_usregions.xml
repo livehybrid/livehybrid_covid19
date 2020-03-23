@@ -4,7 +4,7 @@
     <panel>
       <map>
         <search>
-          <query>index=main sourcetype="covidcdc_usregions"
+          <query>`covid_index` sourcetype="covidcdc_usregions"
 | stats latest("Cases Reported") AS count BY Jurisdiction
 | geom geo_us_states featureIdField=Jurisdiction</query>
           <earliest>-24h@h</earliest>
