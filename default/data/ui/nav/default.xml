@@ -1,0 +1,7 @@
+<nav search_view="search" color="#DA1B12">
+    <view name="search" label="Search"  default="true"/>
+    <view name="inputs" />
+    <collection label="Dashboards">
+        <view source="all" match="COVID"/>
+    </collection>
+</nav>
