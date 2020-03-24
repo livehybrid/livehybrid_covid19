@@ -15,7 +15,16 @@ from splunklib.client import Service
 
 # prints XML stream
 def print_xml_stream(s,source):
+<<<<<<< HEAD
     print "<stream><event unbroken=\"1\"><source>%s</source><data>%s</data><done/></event></stream>" % (source, encodeXMLText(s))
+=======
+<<<<<<< HEAD
+    timenow = time.time()
+    print "<stream><event unbroken=\"1\"><time>%s</time><source>%s</source><data>%s</data><done/></event></stream>" % (timenow, source, encodeXMLText(s))
+=======
+    print "<stream><event unbroken=\"1\"><source>%s</source><data>%s</data><done/></event></stream>" % (source, encodeXMLText(s))
+>>>>>>> ba8c26065dbfbeef5f48c4d7685f809cd17b9bdb
+>>>>>>> f83c3a53bf989a7c30cea31b9931117112873a64
 
 #set up logging
 logging.root
@@ -119,6 +128,14 @@ def do_run():
             req = requests.get(url="https://services1.arcgis.com/0IrmI40n5ZYxTUrV/arcgis/rest/services/CountyUAs_cases/FeatureServer/0/query?f=json&where=TotalCases%20%3C%3E%200&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=*&orderByFields=TotalCases%20desc&outSR=102100&resultOffset=0&resultRecordCount=1000&cacheHint=true", params=req_args)
             resp = req.json()
             for feature in resp['features']:
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+                logging.warning(feature['attributes'])
+                feature['attributes']['time'] = time.time()
+=======
+>>>>>>> ba8c26065dbfbeef5f48c4d7685f809cd17b9bdb
+>>>>>>> f83c3a53bf989a7c30cea31b9931117112873a64
                 handle_output(json.dumps(feature['attributes']),"arcgis:phe:georegions")
             logging.warning("Finished - Waiting for internal")
             time.sleep(float(polling_interval))

@@ -31,3 +31,11 @@ polling_interval = <value>
 request_timeout = <value>
 http_proxy = <value>
 https_proxy = <value>
+
+[covidcdc_usregions://<name>]
+disabled = <value>
+index=<value>
+polling_interval = <value>
+request_timeout = <value>
+http_proxy = <value>
+https_proxy = <value>

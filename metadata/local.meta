@@ -1,0 +1,140 @@
+[app/ui]
+version = 8.0.2
+modtime = 1583184355.484552000
+
+[app/launcher]
+version = 8.0.2
+modtime = 1583184355.489102000
+
+[app/package/check_for_updates]
+version = 8.0.2
+modtime = 1583184355.490508000
+
+[inputs/covid19%3A%2F%2Fgitimport]
+version = 8.0.2
+modtime = 1583312792.128262000
+
+[props/covid19]
+owner = nhsadmin
+version = 8.0.2
+modtime = 1583186840.139553000
+
+[transforms/REPORT-extractcsv]
+owner = nhsadmin
+version = 8.0.2
+modtime = 1583187515.164875000
+
+[props/covid19/REPORT-extractcsv]
+access = read : [ * ], write : [ * ]
+owner = nhsadmin
+version = 8.0.2
+modtime = 1583187021.427147000
+
+[views/covid19__per_country]
+export = none
+owner = nhsadmin
+version = 8.0.2
+modtime = 1583227045.878587000
+
+[views/covid19__world_map]
+export = none
+owner = nhsadmin
+version = 8.0.2
+modtime = 1583192825.520801000
+
+[nav/default]
+version = 8.0.2
+modtime = 1583191821.179052000
+
+[lookups/covid11.kmz]
+access = read : [ * ], write : [ * ]
+export = none
+owner = nhsadmin
+version = 8.0.2
+modtime = 1583920938.356283000
+
+[transforms/covid11]
+access = read : [ * ], write : [ * ]
+export = none
+owner = nhsadmin
+version = 8.0.2
+modtime = 1583921096.167376000
+
+[transforms/cases]
+access = read : [ * ], write : [ * ]
+export = none
+owner = nhsadmin
+version = 8.0.2
+modtime = 1583922326.607280000
+
+[lookups/cases.kmz]
+access = read : [ * ], write : [ * ]
+export = none
+owner = nhsadmin
+version = 8.0.2
+modtime = 1583922338.093075000
+
+[lookups/airports.kml]
+access = read : [ * ], write : [ * ]
+export = none
+owner = nhsadmin
+version = 8.0.2
+modtime = 1583922761.982899000
+
+[transforms/airports]
+access = read : [ * ], write : [ * ]
+export = none
+owner = nhsadmin
+version = 8.0.2
+modtime = 1583923046.029414000
+
+[lookups/cov11.kml]
+access = read : [ * ], write : [ * ]
+export = none
+owner = nhsadmin
+version = 8.0.2
+modtime = 1583923363.409536000
+
+[transforms/cov11]
+access = read : [ * ], write : [ * ]
+export = none
+owner = nhsadmin
+version = 8.0.2
+modtime = 1583923402.331903000
+
+[inputs/covidphe%3A%2F%2Farcgis]
+version = 8.0.2
+modtime = 1583961207.780598000
+
+[views/covid19__uk]
+owner = nhsadmin
+version = 8.0.2
+modtime = 1584092277.880686000
+
+[views/covid19__england_by_region]
+export = none
+owner = nhsadmin
+version = 8.0.2
+modtime = 1584091654.795785000
+
+[inputs/covidphe_regions%3A%2F%2Farcgis]
+version = 8.0.2
+modtime = 1583965247.758702000
+
+[inputs/covidphe_stats%3A%2F%2Farcgis]
+version = 8.0.2
+modtime = 1584095736.808493000
+
+[macros/covid_index]
+access = read : [ * ], write : [ * ]
+export = none
+owner = nhsadmin
+version = 8.0.2
+modtime = 1583967469.613626000
+
+[views/cases_worldwide]
+access = read : [ * ], write : [ * ]
+export = none
+owner = nhsadmin
+version = 8.0.2
+modtime = 1583967939.665355000
