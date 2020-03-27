@@ -138,3 +138,8 @@ export = none
 owner = nhsadmin
 version = 8.0.2
 modtime = 1583967939.665355000
+
+[inputs/covidcdc_usregions%3A%2F%2Ftestws]
+owner = admin
+version = 8.0.2.1
+modtime = 1585094003.185378000
