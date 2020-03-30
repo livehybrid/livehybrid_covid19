@@ -119,6 +119,7 @@ def do_run():
             req = requests.get(url="https://services1.arcgis.com/0IrmI40n5ZYxTUrV/arcgis/rest/services/DailyIndicators/FeatureServer/0/query?where=1%3D1&objectIds=&time=&resultType=none&outFields=*&returnIdsOnly=false&returnUniqueIdsOnly=false&returnCountOnly=false&returnDistinctValues=false&cacheHint=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset=&resultRecordCount=&sqlFormat=none&f=pjson&token=", params=req_args)
             resp = req.json()
             for feature in resp['features']:
+                logging.warning(feature['attributes'])
                 handle_output(json.dumps(feature['attributes']),"arcgis:phe:stats")
             logging.warning("Finished - Waiting for internal")
             time.sleep(float(polling_interval))

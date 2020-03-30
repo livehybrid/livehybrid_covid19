@@ -4,6 +4,9 @@ from github import Github
 from pprint import pprint
 import base64
 import md5
+import csv
+#import io
+from StringIO import StringIO
 
 SPLUNK_HOME = os.environ.get("SPLUNK_HOME")
 
@@ -142,7 +145,17 @@ def do_run():
                         encoded_content = daily_report.content
                         content_bytes = encoded_content.encode('ascii')
                         content = base64.b64decode(content_bytes).decode("utf-8-sig").encode("utf-8")
-                        handle_output(content,daily_report.name)
+                        c = StringIO()
+                        c.write(content)
+                        c.seek(0)
+                        reader = csv.DictReader(c)
+                        for record in reader:
+                            empty_keys = [k for k,v in record.iteritems() if not v]
+                            #Tidy some fields
+                            for k in empty_keys:
+                                del record[k]
+                            print_xml_stream(json.dumps(record,ensure_ascii=False),daily_report.name)
+                        #handle_output(content,daily_report.name)
                         logging.warning("Logging file={}".format(daily_report.name))
                         save_checkpoint(config, daily_report.path)
 
@@ -172,7 +185,7 @@ def load_checkpoint(config, url):
 
 def get_encoded_file_path(config, url):
     # encode the URL (simply to make the file name recognizable)
-    name = ""
+    name = "neewwwwwwwww"
     for i in range(len(url)):
         if url[i].isalnum():
             name += url[i]
@@ -329,3 +342,4 @@ if __name__ == '__main__':
         do_run()
 
     sys.exit(0)
+
