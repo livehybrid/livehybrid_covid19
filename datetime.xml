@@ -1,0 +1,29 @@
+<!-- datetime.xml -->
+
+<datetime>
+
+    <define name="custom1" extract="year, ignored_sep, month, day, hour, minute, second">
+        <!-- ... 2007-3-22 0:0:2  ...' -->
+        <!-- ... 2007/3/22 0:0:2  ...' -->
+        <!-- ... 2020-03-18T14:13:56 ... -->
+        <!-- 2020-03-25 23:33:04 -->
+        <text><![CDATA[(20\d\d)([-\/])([01]?\d)\2([012]?\d|3[01])[T\s]+([012]?\d):([0-6]?\d):([0-6]?\d)]]></text>
+    </define>
+
+    <define name="custom2" extract="month, day, year, hour, minute">
+        <!-- ... 3/22/20 23:45 ...' -->
+        <text><![CDATA[([01]?\d)\/([012]?\d|3[01])\/(\d\d)\s+([012]?\d):([0-6]?\d)]]></text>
+    </define>
+
+
+
+    <timePatterns>
+        <use name="custom1"/>
+        <use name="custom2"/>
+    </timePatterns>
+    <datePatterns>
+        <use name="custom1"/>
+        <use name="custom2"/>
+    </datePatterns>
+
+</datetime>
