@@ -185,7 +185,7 @@ def load_checkpoint(config, url):
 
 def get_encoded_file_path(config, url):
     # encode the URL (simply to make the file name recognizable)
-    name = "neewwwwwwwww"
+    name = "covid"
     for i in range(len(url)):
         if url[i].isalnum():
             name += url[i]
