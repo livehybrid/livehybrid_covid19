@@ -1,10 +1,10 @@
 import sys, logging, os, time, re,json,hashlib
 import xml.dom.minidom
-from github import Github
 from pprint import pprint
 import base64
 import csv
 import md5
+from StringIO import StringIO
 
 SPLUNK_HOME = os.environ.get("SPLUNK_HOME")
 

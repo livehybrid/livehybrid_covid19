@@ -1,0 +1,21 @@
+﻿Table,Column,Description,Values
+NHS Pathways,SiteType ,This is the 'site' based on where the triaged call initiated. Calls can be triaged from either 111 or 999 and this field provides which service the call initiated.,"111 - Call initiated from 111
+999 - Call initiated from 999"
+NHS Pathways,Gender,"This defines the gender of the patient provided by the caller at the start of the call. The classification is phenotypical rather than genotypical, i.e. it does not provide codes for medical or scientific purposes.","Male
+Female"
+NHS Pathways,CCG Code,Derived CCG code based on location of the patient at the time of triage (source: postcode).,"9an = CCG Code
+e.g E38000117 (ONS Version)"
+NHS Pathways,Call date,This is the date that the call was initiated by the user. The date is from midnight to midnight and the date provided will be based on the start of the NHS Pathways call. i.e. if a call is started on 28th March at 11:59pm but then comepleted at 12:29am on 29th March the date provided in this field will be 28th March,"Date dd/mm/yyyy, based on the start of the call"
+NHS Pathways,Ageband,The age band of the caller based on the date of birth provided.,"0-18 = 0 to 18 years old (up to 18 years and 364 days)
+19-69 = 19 to 69 years old (up to 69 years and 364 days)
+70+ = 70 years old or older"
+NHS Pathways,Triage Count ,This is the number of telephony triages for a given day.,n = count of telephony triages
+111 Online,Gender ,"This defines the gender of the patient provided by the user at the start of the online journey. The classification is phenotypical rather than genotypical, i.e. it does not provide codes for medical or scientific purposes.","Male
+Female"
+111 Online,CCG Code ,Derived CCG code based on location of the patient at the time of online journey triage (source: postcode).,"9an = CCG Code
+e.g E38000117 (ONS Version)"
+111 Online,Call date ,This is the date that the call was initiated by the user. The date is from midnight to midnight and the date provided will be based on the start of the NHS Pathways call. i.e. if a call is started on 28th March at 11:59pm but then comepleted at 12:29am on 29th March the date provided in this field will be 28th March,"Date dd/mm/yyyy, based on the start of the call"
+111 Online,Ageband ,The age band of the caller based on the date of birth provided.,"0-18 = 0 to 18 years old (up to 18 years and 364 days)
+19-69 = 19 to 69 years old (up to 69 years and 364 days)
+70+ = 70 years old or older"
+111 Online,Journeys Count,This is the number of completed journeys for a given day,n = count of completed journeys

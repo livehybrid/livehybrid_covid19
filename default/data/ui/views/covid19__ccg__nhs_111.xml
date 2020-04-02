@@ -1,0 +1,88 @@
+<form>
+  <label>CCG - NHS 111</label>
+  <search id="base">
+    <query>index=main sourcetype=covidnhsd source=nhs111|table *</query>
+    <earliest>-24h@h</earliest>
+    <latest>now</latest>
+  </search>
+  <fieldset submitButton="false">
+    <input type="time" token="time" searchWhenChanged="true">
+      <label></label>
+      <default>
+        <earliest>$time.earliest$</earliest>
+        <latest>$time.latest$</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <html>
+      More information on the data available <a href="https://files.digital.nhs.uk/F6/A6178F/NHS%20Pathways%20and%20111%20Online%20Potential%20COVID-19%20Open%20Data%20Descriptions%20-%202020-03-31.xlsx">here</a>
+    </html>
+  </row>
+  <row>
+    <panel>
+      <map>
+        <search base="base">
+          <query>| stats sum(Total) AS count by ccgcode
+| geom ccgboundaries featureIdField=ccgcode allFeatures=true</query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="height">508</option>
+        <option name="mapping.choroplethLayer.colorBins">9</option>
+        <option name="mapping.choroplethLayer.colorMode">auto</option>
+        <option name="mapping.choroplethLayer.maximumColor">0xaf575a</option>
+        <option name="mapping.choroplethLayer.minimumColor">0x62b3b2</option>
+        <option name="mapping.choroplethLayer.neutralPoint">0</option>
+        <option name="mapping.choroplethLayer.shapeOpacity">0.75</option>
+        <option name="mapping.choroplethLayer.showBorder">1</option>
+        <option name="mapping.data.maxClusters">100</option>
+        <option name="mapping.legend.placement">bottomright</option>
+        <option name="mapping.map.center">(53.16,-1.43)</option>
+        <option name="mapping.map.panning">1</option>
+        <option name="mapping.map.scrollZoom">0</option>
+        <option name="mapping.map.zoom">6</option>
+        <option name="mapping.markerLayer.markerMaxSize">50</option>
+        <option name="mapping.markerLayer.markerMinSize">10</option>
+        <option name="mapping.markerLayer.markerOpacity">0.8</option>
+        <option name="mapping.showTiles">1</option>
+        <option name="mapping.tileLayer.maxZoom">7</option>
+        <option name="mapping.tileLayer.minZoom">0</option>
+        <option name="mapping.tileLayer.tileOpacity">1</option>
+        <option name="mapping.type">choropleth</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </map>
+    </panel>
+    <panel>
+      <table>
+        <title>Age Band</title>
+        <search base="base">
+          <query>| stats sum(Total) AS Total BY ageband
+| rename ageband AS "Age Band"</query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+        <format type="number" field="Total">
+          <option name="precision">0</option>
+        </format>
+      </table>
+      <chart>
+        <title>Gender</title>
+        <search base="base">
+          <query>| stats sum(Total) AS Total BY gender</query>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <html>This data is collected from <a href="https://digital.nhs.uk/data-and-information/publications/statistical/mi-potential-covid-19-symptoms-reported-through-nhs-pathways-and-111-online/latest">NHS Digital</a> under the <a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government License</a>
+        <br/>CCG Mapping data was obtained from Office for National Statistics licensed under the Open Government Licence v.3.0</html>
+    </panel>
+  </row>
+</form>

@@ -1,5 +1,6 @@
 local/
 local/*
 bin/**.pyc
+*.pyc
 local
 local/inputs.conf

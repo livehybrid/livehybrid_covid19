@@ -26,6 +26,19 @@ disabled = 0
 
 [covidcdc_usregions.py://cdc]
 disabled = 0
+
+[covidnhsd://nhs111]
+disabled = 0
+
+[covidnhsd://pathways]
+disabled = 0
 ```
 
 By default this data will go to the `main` index, set an index for each input stanza to over-ride this. You will also need to update the `macro.conf` file with the correct index name.
+
+## License
+### CCG Map  
+Contains National Statistics data (c) Crown copyright and database right 2012 Contains Ordnance Survey data (c) Crown copyright and database right 2012
+
+Data is based on ONS boundary file for 2011 LSOAs "Super generalised (200m), clipped to the coastline". The original source file can be downloaded from here: http://www.ons.gov.uk/ons/guide-method/geography/products/census/spatial/2011/index.html
+
