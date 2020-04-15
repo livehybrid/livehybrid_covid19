@@ -1,30 +1,51 @@
 <form>
-  <label>CCG - NHS 111</label>
+  <label>COVID19 related NHS 111 Journeys by CCG</label>
   <search id="base">
-    <query>index=main sourcetype=covidnhsd source=nhs111|table *</query>
-    <earliest>-24h@h</earliest>
-    <latest>now</latest>
+    <query>`covid_index` sourcetype=covidnhsd source=nhs111 ageband=$agerange$ [search `covid_index` sourcetype=covidnhsd source=nhs111 | stats latest(journeydate) as journeydate ]| eval gender=coalesce(gender,sex)| search gender=$gender$ |table *</query>
+    <earliest>$time.earliest$</earliest>
+    <latest>$time.latest$</latest>
   </search>
   <fieldset submitButton="false">
     <input type="time" token="time" searchWhenChanged="true">
       <label></label>
       <default>
-        <earliest>$time.earliest$</earliest>
-        <latest>$time.latest$</latest>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
       </default>
+    </input>
+    <input type="dropdown" token="agerange" searchWhenChanged="true">
+      <label>Age Range</label>
+      <choice value="0-18 years">0-18 Years</choice>
+      <choice value="19-69 years">19-69 Years</choice>
+      <choice value="70+ years">70+ years</choice>
+      <choice value="*">All</choice>
+      <default>*</default>
+      <initialValue>*</initialValue>
+      <prefix>"</prefix>
+      <suffix>"</suffix>
+    </input>
+    <input type="dropdown" token="gender" searchWhenChanged="true">
+      <label>Gender</label>
+      <choice value="Male">Male</choice>
+      <choice value="Female">Female</choice>
+      <choice value="*">All</choice>
+      <default>*</default>
+      <initialValue>*</initialValue>
     </input>
   </fieldset>
   <row>
-    <html>
+    <panel>
+      <html>
       More information on the data available <a href="https://files.digital.nhs.uk/F6/A6178F/NHS%20Pathways%20and%20111%20Online%20Potential%20COVID-19%20Open%20Data%20Descriptions%20-%202020-03-31.xlsx">here</a>
     </html>
+    </panel>
   </row>
   <row>
     <panel>
       <map>
         <search base="base">
           <query>| stats sum(Total) AS count by ccgcode
-| geom ccgboundaries featureIdField=ccgcode allFeatures=true</query>
+| geom ccgmap featureIdField=ccgcode allFeatures=true</query>
         </search>
         <option name="drilldown">none</option>
         <option name="height">508</option>
@@ -33,7 +54,7 @@
         <option name="mapping.choroplethLayer.maximumColor">0xaf575a</option>
         <option name="mapping.choroplethLayer.minimumColor">0x62b3b2</option>
         <option name="mapping.choroplethLayer.neutralPoint">0</option>
-        <option name="mapping.choroplethLayer.shapeOpacity">0.75</option>
+        <option name="mapping.choroplethLayer.shapeOpacity">1</option>
         <option name="mapping.choroplethLayer.showBorder">1</option>
         <option name="mapping.data.maxClusters">100</option>
         <option name="mapping.legend.placement">bottomright</option>
@@ -49,13 +70,20 @@
         <option name="mapping.tileLayer.minZoom">0</option>
         <option name="mapping.tileLayer.tileOpacity">1</option>
         <option name="mapping.type">choropleth</option>
-        <option name="refresh.display">progressbar</option>
         <option name="trellis.enabled">0</option>
         <option name="trellis.scales.shared">1</option>
         <option name="trellis.size">medium</option>
       </map>
     </panel>
     <panel>
+      <single>
+        <title>Total Journeys</title>
+        <search base="base">
+          <query>| stats sum(Total) AS Total</query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
       <table>
         <title>Age Band</title>
         <search base="base">
