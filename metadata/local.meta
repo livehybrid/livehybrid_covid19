@@ -171,3 +171,8 @@ export = none
 owner = nhsadmin
 version = 8.0.2
 modtime = 1585795113.978813000
+
+[inputs/covidgovuk%3A%2F%2Fimport]
+owner = admin
+version = 8.0.2.1
+modtime = 1587069077.306247000

@@ -14,7 +14,7 @@
     <panel>
       <single>
         <search>
-          <query>index=main sourcetype=covidphe_stats
+          <query>`covid_index` sourcetype=covidphe_stats
 | timechart span=1d latest(EnglandCases) AS "England Cases", latest(WalesCases) AS "Wales Cases", latest(ScotlandCases) AS "Scotland Cases", latest(NICases) AS "NorthenIreland Cases"</query>
           <earliest>0</earliest>
           <latest></latest>
@@ -34,14 +34,14 @@
         <option name="trellis.scales.shared">1</option>
         <option name="trellis.size">medium</option>
         <option name="trendColorInterpretation">inverse</option>
-        <option name="trendDisplayMode">absolute</option>
+        <option name="trendDisplayMode">percent</option>
         <option name="unitPosition">after</option>
         <option name="useColors">1</option>
         <option name="useThousandSeparators">1</option>
       </single>
       <single>
         <search>
-          <query>index=main sourcetype=covidphe_stats
+          <query>`covid_index` sourcetype=covidphe_stats
 | timechart span=1d latest(TotalUKDeaths) AS "UK Deaths", latest(NewUKCases) AS "New UK Cases"</query>
           <earliest>0</earliest>
           <latest></latest>
@@ -61,7 +61,7 @@
         <option name="trellis.scales.shared">1</option>
         <option name="trellis.size">medium</option>
         <option name="trendColorInterpretation">inverse</option>
-        <option name="trendDisplayMode">absolute</option>
+        <option name="trendDisplayMode">percent</option>
         <option name="unitPosition">after</option>
         <option name="useColors">1</option>
         <option name="useThousandSeparators">1</option>
@@ -72,11 +72,11 @@
     <panel>
       <map>
         <search base="base">
-          <query>|  dedup Name
+          <query>|  dedup Name sortby -_time
 |  geom "covid11" featureIdField="Name" allFeatures=true</query>
         </search>
         <option name="drilldown">none</option>
-        <option name="mapping.choroplethLayer.colorBins">7</option>
+        <option name="mapping.choroplethLayer.colorBins">8</option>
         <option name="mapping.choroplethLayer.colorMode">auto</option>
         <option name="mapping.choroplethLayer.maximumColor">0xaf575a</option>
         <option name="mapping.choroplethLayer.minimumColor">0x62b3b2</option>
@@ -106,11 +106,9 @@
       <table>
         <title>Top affected Regions</title>
         <search base="base">
-          <query>|  dedup Name
+          <query>|  dedup Name sortby -_time
 | sort - count
 | fields - _time</query>
-          <refresh>5m</refresh>
-          <refreshType>delay</refreshType>
         </search>
         <option name="count">10</option>
         <option name="dataOverlayMode">heatmap</option>

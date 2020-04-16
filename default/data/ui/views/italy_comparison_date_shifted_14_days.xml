@@ -1,0 +1,160 @@
+<form theme="dark">
+  <label>Comparison (Date shifted)</label>
+  <fieldset submitButton="true">
+    <input type="dropdown" token="countryA" searchWhenChanged="true">
+      <label>countryA</label>
+      <fieldForLabel>Region</fieldForLabel>
+      <fieldForValue>Region</fieldForValue>
+      <search>
+        <query>`covid_index` sourcetype=covid19
+| dedup Region</query>
+        <earliest>-7d@h</earliest>
+        <latest>now</latest>
+      </search>
+      <default>Italy</default>
+      <initialValue>Italy</initialValue>
+    </input>
+    <input type="dropdown" token="countryB" searchWhenChanged="true">
+      <label>countryB</label>
+      <fieldForLabel>Region</fieldForLabel>
+      <fieldForValue>Region</fieldForValue>
+      <search>
+        <query>`covid_index` sourcetype=covid19
+| dedup Region</query>
+        <earliest>-7d@h</earliest>
+        <latest>now</latest>
+      </search>
+      <default>United Kingdom</default>
+      <initialValue>United Kingdom</initialValue>
+    </input>
+    <input type="dropdown" token="days" searchWhenChanged="true">
+      <label>Days difference</label>
+      <choice value="1">1</choice>
+      <choice value="2">2</choice>
+      <choice value="3">3</choice>
+      <choice value="4">4</choice>
+      <choice value="5">5</choice>
+      <choice value="6">6</choice>
+      <choice value="7">7</choice>
+      <choice value="8">8</choice>
+      <choice value="9">9</choice>
+      <choice value="10">10</choice>
+      <choice value="11">11</choice>
+      <choice value="12">12</choice>
+      <choice value="13">13</choice>
+      <choice value="14">14</choice>
+      <choice value="15">15</choice>
+      <choice value="16">16</choice>
+      <choice value="17">17</choice>
+      <choice value="18">18</choice>
+      <choice value="19">19</choice>
+      <choice value="20">20</choice>
+      <choice value="21">21</choice>
+      <choice value="22">22</choice>
+      <default>14</default>
+      <initialValue>14</initialValue>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <chart>
+        <title>Confirmed Cases</title>
+        <search>
+          <query>`covid_index` sourcetype=covid19
+| fillnull State
+| dedup _time State Region
+| search Region IN ("$countryA$","$countryB$")
+| eval _time=IF(Region="$countryA$",_time+(60*69*24*$days$),_time)
+| timechart limit=30 span=1d partial=f latest(Confirmed) AS Confirmed by Region</query>
+          <earliest>-31d</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">1</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.chart.overlayFields">"Deaths: Italy","Deaths: United Kingdom"</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trellis.splitBy">_aggregation</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Deaths</title>
+        <search>
+          <query>`covid_index` sourcetype=covid19
+| fillnull State
+| dedup _time State Region
+| search Region IN ("$countryA$","$countryB$")
+| eval _time=IF(Region="$countryA$",_time+(60*69*24*$days$),_time)
+| timechart limit=30 span=1d partial=f latest(Deaths) AS Deaths by Region</query>
+          <earliest>-31d</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">1</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.chart.overlayFields">"Deaths: Italy","Deaths: United Kingdom"</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trellis.splitBy">_aggregation</option>
+      </chart>
+    </panel>
+  </row>
+</form>
