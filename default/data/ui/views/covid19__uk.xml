@@ -1,10 +1,8 @@
 <dashboard theme="light">
-  <label>COVID19 - England Regions</label>
+  <label>COVID19 - England Regions (PHE)</label>
   <search id="base">
-    <query>`covid_index` sourcetype=covidphe_georegions
-| rename GSS_NM AS Name
-| rename TotalCases AS count
-| table _time Name count</query>
+    <query>`covid_index` sourcetype=covidgovuk type=utlas
+| stats latest(totalCases) AS totalCases by region</query>
     <earliest>-7d@d</earliest>
     <latest>now</latest>
     <sampleRatio>1</sampleRatio>
@@ -13,9 +11,13 @@
   <row>
     <panel>
       <single>
+        <title>United Kingdom Totals</title>
         <search>
-          <query>`covid_index` sourcetype=covidphe_stats
-| timechart span=1d latest(EnglandCases) AS "England Cases", latest(WalesCases) AS "Wales Cases", latest(ScotlandCases) AS "Scotland Cases", latest(NICases) AS "NorthenIreland Cases"</query>
+          <query>`covid_index` type=overview 
+| dedup region, detail
+| stats latest(totalCases) AS totalCases, latest(deaths) AS deaths
+| rename "totalCases" AS "Lab-Confirmed Cases"
+| rename deaths AS "Hospital Deaths"</query>
           <earliest>0</earliest>
           <latest></latest>
           <sampleRatio>1</sampleRatio>
@@ -23,7 +25,71 @@
         <option name="colorBy">trend</option>
         <option name="colorMode">none</option>
         <option name="drilldown">none</option>
-        <option name="height">96</option>
+        <option name="height">203</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">1</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">large</option>
+        <option name="trendColorInterpretation">inverse</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">0</option>
+        <option name="useThousandSeparators">1</option>
+      </single>
+      <single>
+        <search>
+          <query>`covid_index` type=overview 
+| timechart span=d partial=false latest(dailyDeaths) AS dailyDeaths, latest(newCases) AS newCases 
+| rename newCases AS "Latest Daily Lab-Confirmed Cases"
+| rename dailyDeaths AS "Latest Daily Hospital Deaths"</query>
+          <earliest>0</earliest>
+          <latest></latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="height">194</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">1</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">large</option>
+        <option name="trendColorInterpretation">inverse</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="trendInterval">-24h</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <single>
+        <title>Total Cases by Country</title>
+        <search>
+          <query>`covid_index` type=countries detail=dailyTotalConfirmedCases 
+| lookup ukcountries.csv region 
+| timechart latest(dailyTotalConfirmedCases) AS TotalCases BY name partial=false
+| filldown</query>
+          <earliest>0</earliest>
+          <latest></latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="height">123</option>
         <option name="numberPrecision">0</option>
         <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
         <option name="rangeValues">[0,30,70,100]</option>
@@ -34,15 +100,19 @@
         <option name="trellis.scales.shared">1</option>
         <option name="trellis.size">medium</option>
         <option name="trendColorInterpretation">inverse</option>
-        <option name="trendDisplayMode">percent</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="trendInterval">-24h</option>
         <option name="unitPosition">after</option>
         <option name="useColors">1</option>
         <option name="useThousandSeparators">1</option>
       </single>
       <single>
+        <title>Total Deaths by Country</title>
         <search>
-          <query>`covid_index` sourcetype=covidphe_stats
-| timechart span=1d latest(TotalUKDeaths) AS "UK Deaths", latest(NewUKCases) AS "New UK Cases"</query>
+          <query>`covid_index` type=countries detail=deaths 
+| lookup ukcountries.csv region 
+| timechart latest(deaths) AS TotalDeaths BY name partial=false
+| filldown</query>
           <earliest>0</earliest>
           <latest></latest>
           <sampleRatio>1</sampleRatio>
@@ -61,7 +131,7 @@
         <option name="trellis.scales.shared">1</option>
         <option name="trellis.size">medium</option>
         <option name="trendColorInterpretation">inverse</option>
-        <option name="trendDisplayMode">percent</option>
+        <option name="trendDisplayMode">absolute</option>
         <option name="unitPosition">after</option>
         <option name="useColors">1</option>
         <option name="useThousandSeparators">1</option>
@@ -72,8 +142,9 @@
     <panel>
       <map>
         <search base="base">
-          <query>|  dedup Name sortby -_time
-|  geom "covid11" featureIdField="Name" allFeatures=true</query>
+          <query>| geom utlas featureIdField=region</query>
+          <refresh>5m</refresh>
+          <refreshType>delay</refreshType>
         </search>
         <option name="drilldown">none</option>
         <option name="mapping.choroplethLayer.colorBins">8</option>
@@ -81,7 +152,7 @@
         <option name="mapping.choroplethLayer.maximumColor">0xaf575a</option>
         <option name="mapping.choroplethLayer.minimumColor">0x62b3b2</option>
         <option name="mapping.choroplethLayer.neutralPoint">0</option>
-        <option name="mapping.choroplethLayer.shapeOpacity">1</option>
+        <option name="mapping.choroplethLayer.shapeOpacity">0.75</option>
         <option name="mapping.choroplethLayer.showBorder">1</option>
         <option name="mapping.data.maxClusters">100</option>
         <option name="mapping.legend.placement">bottomright</option>
@@ -97,6 +168,7 @@
         <option name="mapping.tileLayer.minZoom">0</option>
         <option name="mapping.tileLayer.tileOpacity">1</option>
         <option name="mapping.type">choropleth</option>
+        <option name="refresh.display">progressbar</option>
         <option name="trellis.enabled">0</option>
         <option name="trellis.scales.shared">1</option>
         <option name="trellis.size">medium</option>
@@ -106,15 +178,24 @@
       <table>
         <title>Top affected Regions</title>
         <search base="base">
-          <query>|  dedup Name sortby -_time
-| sort - count
-| fields - _time</query>
+          <query>| lookup ukutlas.csv region
+| table name totalCases
+| rename name AS "Region"
+| rename totalCases AS "Total Cases"
+| sort 0 - "Total Cases"</query>
+          <refresh>5m</refresh>
+          <refreshType>delay</refreshType>
         </search>
         <option name="count">10</option>
         <option name="dataOverlayMode">heatmap</option>
         <option name="drilldown">none</option>
         <option name="refresh.display">progressbar</option>
       </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <html>Data available from <a href="https://www.gov.uk/government/publications/covid-19-track-coronavirus-cases">Gov.UK:</a>  Contains Office for National Statistics data. Crown copyright and database right 2020.</html>
     </panel>
   </row>
 </dashboard>
