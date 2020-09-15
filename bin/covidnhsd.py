@@ -119,7 +119,7 @@ def do_run():
     page_dom = html.fromstring(page.content)
     urls = {}
     urls['pathways'] = page_dom.xpath('//a[@title="NHS Pathways Potential COVID-19 Open Data"]')[0].attrib['href']
-    urls['nhs111'] = page_dom.xpath('//a[@title="111 Online Potential COIVD-19 Open Data"]')[0].attrib['href']
+    urls['nhs111'] = page_dom.xpath('//a[@title="111 Online Potential COVID-19 Open Data"]')[0].attrib['href']
     urls['meta'] = page_dom.xpath('//a[@title="NHS Pathways and 111 Online Potential COVID-19 Open Data Descriptions"]')[0].attrib['href']
     urls['description'] = page_dom.xpath('//a[@title="NHS Pathways and 111 Online Potential COVID-19 Meta Data"]')[0].attrib['href']
 
